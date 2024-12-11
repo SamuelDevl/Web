@@ -1,0 +1,118 @@
+*{
+    padding: 0;
+    margin: 0;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+}
+
+:root{
+    --bg-color: #080808;
+    --second-bg-color: 131313;
+    --text-color: white;
+    --main-color: #00ffee;
+}
+
+body{
+    /* background-color: var(--bg-color);*/
+     background: #000;
+     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+     color: #fff;
+ }
+
+.about-me h1{
+    text-align: center;
+    padding-bottom: 2rem;
+    font-weight: 800;
+    font-size: 3rem;
+}
+
+ .about-me{
+    padding: 2rem;
+    margin: 1rem;
+ }
+
+ .about-me h2{
+    text-align: center;
+    padding: 10px 10px;
+    font-weight: 800;
+ }
+
+ .about-me ul{
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid; 
+    border-image: linear-gradient(to right, black 0%, white 50%, black 100%);
+    border-image-slice: 1; 
+}
+ 
+ ul{
+    list-style: none;
+ }
+
+ .about-me li{
+    font-weight: 600;
+    font-size: 1.1em;
+    display: block;
+    transition: all 0.5s ease;
+ }
+
+.about-me li:hover{
+    color: aqua;
+}
+
+.about-me .container-about-me .about-me-card{
+    transition: all 0.8s ease;
+    position: relative;
+    z-index: 10;
+}
+
+.about-me .container-about-me .about-me-card:hover{
+    transform: scale(1.05);
+}
+
+.about-me .container-about-me{
+    position: relative;
+    transition: all 0.8s ease;
+    padding: 20px;
+    background: repeating-conic-gradient(from var(--a), var(--main-color) 0%, var(--main-color) 10%, transparent 10%,transparent 50%);
+    animation: anima 7s linear infinite;
+}
+
+.about-me .container-about-me::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-conic-gradient(from var(--a), var(--main-color) 0%, var(--main-color) 10%, transparent 10%, transparent 50%);
+    animation: anima 7s linear infinite;
+    animation-delay: -1.5s;
+}
+
+.about-me .container-about-me::after{
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border: 20px solid #131212;
+    background: var(--bg-color);
+}
+
+.about-me .container-about-me:hover{
+    transform: scale(1.05);
+}
+
+
+@property --a
+{
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 360deg;
+}
+@keyframes anima
+{
+    0%{
+        --a: 0deg;
+    }
+    100%{
+        --a: 360deg:
+    }
+}
