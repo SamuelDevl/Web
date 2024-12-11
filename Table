@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabulka s paginací</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        /* Styl pro paginaci */
+        .pagination {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .pagination button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #f2f2f2;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+        .pagination button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Tabulka s paginací</h2>
+
+<table id="myTable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Jméno</th>
+            <th>Věk</th>
+            <th>Město</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Řádky budou vloženy pomocí JavaScriptu -->
+    </tbody>
+</table>
+
+<div class="pagination" id="pagination">
+    <!-- Tady se zobrazí tlačítka pro stránky -->
+</div>
+
+<script>
+    // Počet řádků na stránku
+    const rowsPerPage = 50;
+    const totalRows = 1000;
+
+    // Najdeme tělo tabulky
+    const tbody = document.querySelector("#myTable tbody");
+
+    // Generujeme data (např. 1000 řádků)
+    const data = [];
+    for (let i = 1; i <= totalRows; i++) {
+        data.push({
+            id: i,
+            name: `Jméno ${i}`,
+            age: Math.floor(Math.random() * 100),
+            city: `Město ${i}`
+        });
+    }
+
+    // Funkce pro zobrazení konkrétní stránky
+    function displayPage(page) {
+        tbody.innerHTML = ""; // Vymažeme aktuální obsah tabulky
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const pageData = data.slice(start, end); // Vybereme data pro aktuální stránku
+
+        // Vytvoříme řádky pro tuto stránku
+        pageData.forEach(item => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${item.id}</td>
+                <td>${item.name}</td>
+                <td>${item.age}</td>
+                <td>${item.city}</td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        // Aktualizujeme aktivní stránku v paginaci
+        document.querySelectorAll('.pagination button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`.pagination button[data-page="${page}"]`).classList.add('active');
+    }
+
+    // Funkce pro vytvoření paginace (tlačítek)
+    function setupPagination(totalRows, rowsPerPage) {
+        const pageCount = Math.ceil(totalRows / rowsPerPage); // Počet stránek
+        const paginationDiv = document.getElementById("pagination");
+
+        for (let i = 1; i <= pageCount; i++) {
+            const btn = document.createElement("button");
+            btn.textContent = i;
+            btn.setAttribute("data-page", i);
+
+            // Při kliknutí na tlačítko přejdeme na danou stránku
+            btn.addEventListener("click", function() {
+                displayPage(i);
+            });
+
+            // Přiřadíme aktivní třídu první stránce
+            if (i === 1) btn.classList.add('active');
+
+            paginationDiv.appendChild(btn);
+        }
+    }
+
+    // Spustíme při načtení stránky
+    setupPagination(totalRows, rowsPerPage);
+    displayPage(1); // Zobrazíme první stránku při načtení
+
+</script>
+
+</body>
+</html>
